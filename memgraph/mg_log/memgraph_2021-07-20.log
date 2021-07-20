@@ -1,0 +1,728 @@
+[2021-07-20 14:04:40.178] [memgraph_log] [info] Memory limit set to 1.94GiB
+[2021-07-20 14:04:40.185] [memgraph_log] [info] Recovering persisted data using snapshot ("/var/lib/memgraph/snapshots") and WAL directory ("/var/lib/memgraph/wal").
+[2021-07-20 14:04:40.186] [memgraph_log] [info] No snapshot file was found, collecting information from WAL directory "/var/lib/memgraph/wal".
+[2021-07-20 14:04:40.187] [memgraph_log] [warning] No snapshot or WAL file found!
+[2021-07-20 14:04:40.494] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:04:41.017] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:04:41.018] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:04:41.048] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:04:41.048] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:04:41.050] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:04:41.051] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:04:41.054] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:04:41.055] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:04:41.056] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:04:41.056] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:04:41.058] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:04:41.058] [memgraph_log] [info] Loading triggers...
+[2021-07-20 14:04:41.058] [memgraph_log] [info] Loading streams...
+[2021-07-20 14:04:41.059] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:04:41.228] [memgraph_log] [info] Starting 2 Bolt workers
+[2021-07-20 14:04:41.229] [memgraph_log] [info] Bolt server is fully armed and operational
+[2021-07-20 14:04:41.229] [memgraph_log] [info] Bolt listening on 0.0.0.0:7687
+[2021-07-20 14:04:44.442] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63820
+[2021-07-20 14:04:44.445] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63822
+[2021-07-20 14:04:44.445] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:04:44.447] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:04:44.450] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:04:44.453] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:04:44.458] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:04:44.460] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:04:45.228] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.3:43910
+[2021-07-20 14:04:45.231] [memgraph_log] [info] Using version 4.1 of protocol
+[2021-07-20 14:04:45.233] [memgraph_log] [info] Client connected 'mgclient/1.2.0'
+[2021-07-20 14:04:45.235] [memgraph_log] [debug] [Run] 'MATCH (n) DETACH DELETE n;'
+[2021-07-20 14:04:45.241] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :Book(isbn);'
+[2021-07-20 14:04:45.264] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :User(user_id);'
+[2021-07-20 14:04:45.271] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Books_Summary.csv" WITH HEADER AS row 
+                                CREATE (b: Book { 
+                                isbn: row.isbn , 
+                                title:  row.book_title, 
+                                author: row.book_author, 
+                                publisher: row.publisher, 
+                                year_of_publishing: row.year_of_publication, 
+                                language: row.Language, 
+                                summary:  row.Summary, 
+                                img: row.img_m 
+                            }); '
+[2021-07-20 14:04:45.322] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Users_Rated.csv" WITH HEADER AS row
+                                CREATE (u: User {
+                                    user_id : row.user_id,
+                                    age: row.age,
+                                    city : row.city,
+                                    state : row.state,
+                                    country : row.country
+                                }); '
+[2021-07-20 14:04:45.540] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Ratings.csv" WITH HEADER AS row
+                                MATCH (u:User), (b:Book) WHERE u.user_id = row.UserID AND b.isbn = row.ISBN
+                                CREATE (u)-[:RATED { rating: row.BookRating }] -> (b) ;
+                                '
+[2021-07-20 14:04:45.725] [memgraph_log] [info] Bolt client 172.19.0.3:43910 closed the connection.
+[2021-07-20 14:04:49.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:04:49.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:04:53.398] [memgraph_log] [info] Bolt shutting down...
+[2021-07-20 14:04:54.233] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:04:54.235] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:04:54.236] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:04:54.239] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:04:54.243] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:04:54.245] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:04:54.247] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:04:54.248] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:04:54.250] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:04:54.251] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:04:54.253] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:04:54.254] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:04:55.153] [memgraph_log] [info] Starting snapshot creation to "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12"
+[2021-07-20 14:05:04.444] [memgraph_log] [info] Memory limit set to 1.94GiB
+[2021-07-20 14:05:04.447] [memgraph_log] [info] Recovering persisted data using snapshot ("/var/lib/memgraph/snapshots") and WAL directory ("/var/lib/memgraph/wal").
+[2021-07-20 14:05:04.452] [memgraph_log] [info] No snapshot file was found, collecting information from WAL directory "/var/lib/memgraph/wal".
+[2021-07-20 14:05:04.516] [memgraph_log] [info] Checking WAL files.
+[2021-07-20 14:05:04.516] [memgraph_log] [info] Trying to load WAL files.
+[2021-07-20 14:05:04.516] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140445245802_from_3_to_10".
+[2021-07-20 14:05:04.548] [memgraph_log] [info] WAL file contains 146571 deltas.
+[2021-07-20 14:05:04.607] [memgraph_log] [info] Applied 146571 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:05:04.608] [memgraph_log] [info] All necessary WAL files are loaded successfully.
+[2021-07-20 14:05:04.608] [memgraph_log] [info] Recreating indices from metadata.
+[2021-07-20 14:05:04.609] [memgraph_log] [info] Recreating 0 label indices from metadata.
+[2021-07-20 14:05:04.609] [memgraph_log] [info] Label indices are recreated.
+[2021-07-20 14:05:04.610] [memgraph_log] [info] Recreating 2 label+property indices from metadata.
+[2021-07-20 14:05:04.611] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:05:04.623] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:05:04.623] [memgraph_log] [info] Label+property indices are recreated.
+[2021-07-20 14:05:04.624] [memgraph_log] [info] Indices are recreated.
+[2021-07-20 14:05:04.624] [memgraph_log] [info] Recreating constraints from metadata.
+[2021-07-20 14:05:04.624] [memgraph_log] [info] Recreating 0 existence constraints from metadata.
+[2021-07-20 14:05:04.625] [memgraph_log] [info] Existence constraints are recreated from metadata.
+[2021-07-20 14:05:04.625] [memgraph_log] [info] Recreating 0 unique constraints from metadata.
+[2021-07-20 14:05:04.625] [memgraph_log] [info] Unique constraints are recreated from metadata.
+[2021-07-20 14:05:04.626] [memgraph_log] [info] Constraints are recreated from metadata.
+[2021-07-20 14:05:04.737] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:05:04.950] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:05:04.951] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:05:04.975] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:05:04.975] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:05:04.977] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:05:04.977] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:05:04.979] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:05:04.979] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:05:04.980] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:05:04.980] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:05:04.981] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:05:04.982] [memgraph_log] [info] Loading triggers...
+[2021-07-20 14:05:04.982] [memgraph_log] [info] Loading streams...
+[2021-07-20 14:05:04.982] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:05:05.053] [memgraph_log] [info] Starting 2 Bolt workers
+[2021-07-20 14:05:05.053] [memgraph_log] [info] Bolt server is fully armed and operational
+[2021-07-20 14:05:05.053] [memgraph_log] [info] Bolt listening on 0.0.0.0:7687
+[2021-07-20 14:05:05.469] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.3:43932
+[2021-07-20 14:05:05.469] [memgraph_log] [info] Using version 4.1 of protocol
+[2021-07-20 14:05:05.470] [memgraph_log] [info] Client connected 'mgclient/1.2.0'
+[2021-07-20 14:05:05.470] [memgraph_log] [debug] [Run] 'MATCH (n) DETACH DELETE n;'
+[2021-07-20 14:05:05.497] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :Book(isbn);'
+[2021-07-20 14:05:05.498] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :User(user_id);'
+[2021-07-20 14:05:05.498] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Books_Summary.csv" WITH HEADER AS row 
+                                CREATE (b: Book { 
+                                isbn: row.isbn , 
+                                title:  row.book_title, 
+                                author: row.book_author, 
+                                publisher: row.publisher, 
+                                year_of_publishing: row.year_of_publication, 
+                                language: row.Language, 
+                                summary:  row.Summary, 
+                                img: row.img_m 
+                            }); '
+[2021-07-20 14:05:05.522] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Users_Rated.csv" WITH HEADER AS row
+                                CREATE (u: User {
+                                    user_id : row.user_id,
+                                    age: row.age,
+                                    city : row.city,
+                                    state : row.state,
+                                    country : row.country
+                                }); '
+[2021-07-20 14:05:05.744] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Ratings.csv" WITH HEADER AS row
+                                MATCH (u:User), (b:Book) WHERE u.user_id = row.UserID AND b.isbn = row.ISBN
+                                CREATE (u)-[:RATED { rating: row.BookRating }] -> (b) ;
+                                '
+[2021-07-20 14:05:05.975] [memgraph_log] [info] Bolt client 172.19.0.3:43932 closed the connection.
+[2021-07-20 14:05:09.440] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63852
+[2021-07-20 14:05:09.442] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63854
+[2021-07-20 14:05:09.443] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:05:09.445] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:05:09.446] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:05:09.448] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:05:09.454] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:05:09.455] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:05:14.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:05:14.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:05:14.817] [memgraph_log] [info] Bolt shutting down...
+[2021-07-20 14:19:39.785] [memgraph_log] [info] Memory limit set to 1.94GiB
+[2021-07-20 14:19:39.788] [memgraph_log] [info] Recovering persisted data using snapshot ("/var/lib/memgraph/snapshots") and WAL directory ("/var/lib/memgraph/wal").
+[2021-07-20 14:19:39.792] [memgraph_log] [info] No snapshot file was found, collecting information from WAL directory "/var/lib/memgraph/wal".
+[2021-07-20 14:19:39.929] [memgraph_log] [info] Checking WAL files.
+[2021-07-20 14:19:39.929] [memgraph_log] [info] Trying to load WAL files.
+[2021-07-20 14:19:39.930] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140445245802_from_3_to_10".
+[2021-07-20 14:19:39.948] [memgraph_log] [info] WAL file contains 146571 deltas.
+[2021-07-20 14:19:40.009] [memgraph_log] [info] Applied 146571 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:19:40.010] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140505480498_current".
+[2021-07-20 14:19:40.030] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:19:40.099] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:19:40.100] [memgraph_log] [info] All necessary WAL files are loaded successfully.
+[2021-07-20 14:19:40.101] [memgraph_log] [info] Recreating indices from metadata.
+[2021-07-20 14:19:40.101] [memgraph_log] [info] Recreating 0 label indices from metadata.
+[2021-07-20 14:19:40.101] [memgraph_log] [info] Label indices are recreated.
+[2021-07-20 14:19:40.102] [memgraph_log] [info] Recreating 2 label+property indices from metadata.
+[2021-07-20 14:19:40.103] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:19:40.114] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:19:40.114] [memgraph_log] [info] Label+property indices are recreated.
+[2021-07-20 14:19:40.114] [memgraph_log] [info] Indices are recreated.
+[2021-07-20 14:19:40.115] [memgraph_log] [info] Recreating constraints from metadata.
+[2021-07-20 14:19:40.115] [memgraph_log] [info] Recreating 0 existence constraints from metadata.
+[2021-07-20 14:19:40.115] [memgraph_log] [info] Existence constraints are recreated from metadata.
+[2021-07-20 14:19:40.115] [memgraph_log] [info] Recreating 0 unique constraints from metadata.
+[2021-07-20 14:19:40.116] [memgraph_log] [info] Unique constraints are recreated from metadata.
+[2021-07-20 14:19:40.116] [memgraph_log] [info] Constraints are recreated from metadata.
+[2021-07-20 14:19:40.226] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:19:40.466] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:19:40.467] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:19:40.492] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:19:40.492] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:19:40.494] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:19:40.494] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:19:40.496] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:19:40.497] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:19:40.498] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:19:40.498] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:19:40.499] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:19:40.500] [memgraph_log] [info] Loading triggers...
+[2021-07-20 14:19:40.500] [memgraph_log] [info] Loading streams...
+[2021-07-20 14:19:40.500] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:19:40.590] [memgraph_log] [info] Starting 2 Bolt workers
+[2021-07-20 14:19:40.590] [memgraph_log] [info] Bolt server is fully armed and operational
+[2021-07-20 14:19:40.590] [memgraph_log] [info] Bolt listening on 0.0.0.0:7687
+[2021-07-20 14:19:40.828] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.3:43978
+[2021-07-20 14:19:40.829] [memgraph_log] [info] Using version 4.1 of protocol
+[2021-07-20 14:19:40.829] [memgraph_log] [info] Client connected 'mgclient/1.2.0'
+[2021-07-20 14:19:40.830] [memgraph_log] [debug] [Run] 'MATCH (n) DETACH DELETE n;'
+[2021-07-20 14:19:40.856] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :Book(isbn);'
+[2021-07-20 14:19:40.857] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :User(user_id);'
+[2021-07-20 14:19:40.858] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Books_Summary.csv" WITH HEADER AS row 
+                                CREATE (b: Book { 
+                                isbn: row.isbn , 
+                                title:  row.book_title, 
+                                author: row.book_author, 
+                                publisher: row.publisher, 
+                                year_of_publishing: row.year_of_publication, 
+                                language: row.Language, 
+                                summary:  row.Summary, 
+                                img: row.img_m 
+                            }); '
+[2021-07-20 14:19:40.881] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Users_Rated.csv" WITH HEADER AS row
+                                CREATE (u: User {
+                                    user_id : row.user_id,
+                                    age: row.age,
+                                    city : row.city,
+                                    state : row.state,
+                                    country : row.country
+                                }); '
+[2021-07-20 14:19:41.110] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Ratings.csv" WITH HEADER AS row
+                                MATCH (u:User), (b:Book) WHERE u.user_id = row.UserID AND b.isbn = row.ISBN
+                                CREATE (u)-[:RATED { rating: row.BookRating }] -> (b) ;
+                                '
+[2021-07-20 14:19:41.285] [memgraph_log] [info] Bolt client 172.19.0.3:43978 closed the connection.
+[2021-07-20 14:19:44.440] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63898
+[2021-07-20 14:19:44.442] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63900
+[2021-07-20 14:19:44.442] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:19:44.443] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:19:44.446] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:19:44.446] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:19:44.448] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:19:44.448] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:19:49.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:19:49.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:19:54.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:19:54.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:19:59.436] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:19:59.436] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:04.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:04.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:09.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:09.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:14.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:14.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:19.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:19.433] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:24.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:24.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:29.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:29.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:34.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:34.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:39.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:39.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:44.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:44.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:49.436] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:49.436] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:54.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:54.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:20:59.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:20:59.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:21:06.859] [memgraph_log] [info] Memory limit set to 1.94GiB
+[2021-07-20 14:21:06.861] [memgraph_log] [info] Recovering persisted data using snapshot ("/var/lib/memgraph/snapshots") and WAL directory ("/var/lib/memgraph/wal").
+[2021-07-20 14:21:06.864] [memgraph_log] [info] No snapshot file was found, collecting information from WAL directory "/var/lib/memgraph/wal".
+[2021-07-20 14:21:07.068] [memgraph_log] [info] Checking WAL files.
+[2021-07-20 14:21:07.070] [memgraph_log] [info] Trying to load WAL files.
+[2021-07-20 14:21:07.070] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140445245802_from_3_to_10".
+[2021-07-20 14:21:07.091] [memgraph_log] [info] WAL file contains 146571 deltas.
+[2021-07-20 14:21:07.155] [memgraph_log] [info] Applied 146571 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:21:07.156] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140505480498_current".
+[2021-07-20 14:21:07.191] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:21:07.268] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:21:07.269] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720141940840414_current".
+[2021-07-20 14:21:07.301] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:21:07.371] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:21:07.372] [memgraph_log] [info] All necessary WAL files are loaded successfully.
+[2021-07-20 14:21:07.391] [memgraph_log] [info] Recreating indices from metadata.
+[2021-07-20 14:21:07.391] [memgraph_log] [info] Recreating 0 label indices from metadata.
+[2021-07-20 14:21:07.391] [memgraph_log] [info] Label indices are recreated.
+[2021-07-20 14:21:07.392] [memgraph_log] [info] Recreating 2 label+property indices from metadata.
+[2021-07-20 14:21:07.393] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:21:07.404] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:21:07.404] [memgraph_log] [info] Label+property indices are recreated.
+[2021-07-20 14:21:07.405] [memgraph_log] [info] Indices are recreated.
+[2021-07-20 14:21:07.405] [memgraph_log] [info] Recreating constraints from metadata.
+[2021-07-20 14:21:07.405] [memgraph_log] [info] Recreating 0 existence constraints from metadata.
+[2021-07-20 14:21:07.406] [memgraph_log] [info] Existence constraints are recreated from metadata.
+[2021-07-20 14:21:07.406] [memgraph_log] [info] Recreating 0 unique constraints from metadata.
+[2021-07-20 14:21:07.406] [memgraph_log] [info] Unique constraints are recreated from metadata.
+[2021-07-20 14:21:07.406] [memgraph_log] [info] Constraints are recreated from metadata.
+[2021-07-20 14:21:07.547] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:21:07.826] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:21:07.828] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:21:07.855] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:21:07.856] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:21:07.857] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:21:07.858] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:21:07.861] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:21:07.862] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:21:07.863] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:21:07.863] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:21:07.865] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:21:07.865] [memgraph_log] [info] Loading triggers...
+[2021-07-20 14:21:07.865] [memgraph_log] [info] Loading streams...
+[2021-07-20 14:21:07.865] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:21:07.988] [memgraph_log] [info] Starting 2 Bolt workers
+[2021-07-20 14:21:07.988] [memgraph_log] [info] Bolt server is fully armed and operational
+[2021-07-20 14:21:07.989] [memgraph_log] [info] Bolt listening on 0.0.0.0:7687
+[2021-07-20 14:21:07.990] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.3:43990
+[2021-07-20 14:21:07.991] [memgraph_log] [info] Using version 4.1 of protocol
+[2021-07-20 14:21:07.992] [memgraph_log] [info] Client connected 'mgclient/1.2.0'
+[2021-07-20 14:21:07.992] [memgraph_log] [debug] [Run] 'MATCH (n) DETACH DELETE n;'
+[2021-07-20 14:21:08.021] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :Book(isbn);'
+[2021-07-20 14:21:08.022] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :User(user_id);'
+[2021-07-20 14:21:08.023] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Books_Summary.csv" WITH HEADER AS row 
+                                CREATE (b: Book { 
+                                isbn: row.isbn , 
+                                title:  row.book_title, 
+                                author: row.book_author, 
+                                publisher: row.publisher, 
+                                year_of_publishing: row.year_of_publication, 
+                                language: row.Language, 
+                                summary:  row.Summary, 
+                                img: row.img_m 
+                            }); '
+[2021-07-20 14:21:08.059] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Users_Rated.csv" WITH HEADER AS row
+                                CREATE (u: User {
+                                    user_id : row.user_id,
+                                    age: row.age,
+                                    city : row.city,
+                                    state : row.state,
+                                    country : row.country
+                                }); '
+[2021-07-20 14:21:08.298] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Ratings.csv" WITH HEADER AS row
+                                MATCH (u:User), (b:Book) WHERE u.user_id = row.UserID AND b.isbn = row.ISBN
+                                CREATE (u)-[:RATED { rating: row.BookRating }] -> (b) ;
+                                '
+[2021-07-20 14:21:08.480] [memgraph_log] [info] Bolt client 172.19.0.3:43990 closed the connection.
+[2021-07-20 14:21:09.433] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63912
+[2021-07-20 14:21:09.433] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63910
+[2021-07-20 14:21:09.433] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:21:09.434] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:21:09.434] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:21:09.435] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:21:09.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:21:09.436] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:21:11.264] [memgraph_log] [info] Bolt shutting down...
+[2021-07-20 14:21:20.767] [memgraph_log] [info] Memory limit set to 1.94GiB
+[2021-07-20 14:21:20.770] [memgraph_log] [info] Recovering persisted data using snapshot ("/var/lib/memgraph/snapshots") and WAL directory ("/var/lib/memgraph/wal").
+[2021-07-20 14:21:20.774] [memgraph_log] [info] No snapshot file was found, collecting information from WAL directory "/var/lib/memgraph/wal".
+[2021-07-20 14:21:21.061] [memgraph_log] [info] Checking WAL files.
+[2021-07-20 14:21:21.061] [memgraph_log] [info] Trying to load WAL files.
+[2021-07-20 14:21:21.069] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140445245802_from_3_to_10".
+[2021-07-20 14:21:21.087] [memgraph_log] [info] WAL file contains 146571 deltas.
+[2021-07-20 14:21:21.146] [memgraph_log] [info] Applied 146571 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:21:21.147] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140505480498_current".
+[2021-07-20 14:21:21.177] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:21:21.247] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:21:21.248] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720141940840414_current".
+[2021-07-20 14:21:21.268] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:21:21.347] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:21:21.348] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720142108006190_current".
+[2021-07-20 14:21:21.368] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:21:21.476] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:21:21.476] [memgraph_log] [info] All necessary WAL files are loaded successfully.
+[2021-07-20 14:21:21.476] [memgraph_log] [info] Recreating indices from metadata.
+[2021-07-20 14:21:21.477] [memgraph_log] [info] Recreating 0 label indices from metadata.
+[2021-07-20 14:21:21.478] [memgraph_log] [info] Label indices are recreated.
+[2021-07-20 14:21:21.478] [memgraph_log] [info] Recreating 2 label+property indices from metadata.
+[2021-07-20 14:21:21.479] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:21:21.492] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:21:21.492] [memgraph_log] [info] Label+property indices are recreated.
+[2021-07-20 14:21:21.492] [memgraph_log] [info] Indices are recreated.
+[2021-07-20 14:21:21.493] [memgraph_log] [info] Recreating constraints from metadata.
+[2021-07-20 14:21:21.493] [memgraph_log] [info] Recreating 0 existence constraints from metadata.
+[2021-07-20 14:21:21.493] [memgraph_log] [info] Existence constraints are recreated from metadata.
+[2021-07-20 14:21:21.494] [memgraph_log] [info] Recreating 0 unique constraints from metadata.
+[2021-07-20 14:21:21.494] [memgraph_log] [info] Unique constraints are recreated from metadata.
+[2021-07-20 14:21:21.497] [memgraph_log] [info] Constraints are recreated from metadata.
+[2021-07-20 14:21:21.642] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:21:21.932] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:21:21.932] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:21:21.959] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:21:21.960] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:21:21.975] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:21:21.976] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:21:21.978] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:21:21.978] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:21:21.979] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:21:21.979] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:21:21.980] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:21:21.980] [memgraph_log] [info] Loading triggers...
+[2021-07-20 14:21:21.981] [memgraph_log] [info] Loading streams...
+[2021-07-20 14:21:21.981] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:21:22.058] [memgraph_log] [info] Starting 2 Bolt workers
+[2021-07-20 14:21:22.059] [memgraph_log] [info] Bolt server is fully armed and operational
+[2021-07-20 14:21:22.059] [memgraph_log] [info] Bolt listening on 0.0.0.0:7687
+[2021-07-20 14:21:24.439] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63930
+[2021-07-20 14:21:24.441] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63932
+[2021-07-20 14:21:24.442] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:21:24.442] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:21:24.443] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:21:24.443] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:21:24.445] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:21:24.446] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:21:25.962] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.3:44020
+[2021-07-20 14:21:25.964] [memgraph_log] [info] Using version 4.1 of protocol
+[2021-07-20 14:21:25.966] [memgraph_log] [info] Client connected 'mgclient/1.2.0'
+[2021-07-20 14:21:25.968] [memgraph_log] [debug] [Run] 'MATCH (n) DETACH DELETE n;'
+[2021-07-20 14:21:26.000] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :Book(isbn);'
+[2021-07-20 14:21:26.001] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :User(user_id);'
+[2021-07-20 14:21:26.002] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Books_Summary.csv" WITH HEADER AS row 
+                                CREATE (b: Book { 
+                                isbn: row.isbn , 
+                                title:  row.book_title, 
+                                author: row.book_author, 
+                                publisher: row.publisher, 
+                                year_of_publishing: row.year_of_publication, 
+                                language: row.Language, 
+                                summary:  row.Summary, 
+                                img: row.img_m 
+                            }); '
+[2021-07-20 14:21:26.027] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Users_Rated.csv" WITH HEADER AS row
+                                CREATE (u: User {
+                                    user_id : row.user_id,
+                                    age: row.age,
+                                    city : row.city,
+                                    state : row.state,
+                                    country : row.country
+                                }); '
+[2021-07-20 14:21:26.267] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Ratings.csv" WITH HEADER AS row
+                                MATCH (u:User), (b:Book) WHERE u.user_id = row.UserID AND b.isbn = row.ISBN
+                                CREATE (u)-[:RATED { rating: row.BookRating }] -> (b) ;
+                                '
+[2021-07-20 14:21:26.441] [memgraph_log] [info] Bolt client 172.19.0.3:44020 closed the connection.
+[2021-07-20 14:21:29.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:21:29.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:21:31.651] [memgraph_log] [info] Bolt shutting down...
+[2021-07-20 14:23:08.633] [memgraph_log] [info] Memory limit set to 1.94GiB
+[2021-07-20 14:23:08.635] [memgraph_log] [info] Recovering persisted data using snapshot ("/var/lib/memgraph/snapshots") and WAL directory ("/var/lib/memgraph/wal").
+[2021-07-20 14:23:08.639] [memgraph_log] [info] No snapshot file was found, collecting information from WAL directory "/var/lib/memgraph/wal".
+[2021-07-20 14:23:08.990] [memgraph_log] [info] Checking WAL files.
+[2021-07-20 14:23:08.990] [memgraph_log] [info] Trying to load WAL files.
+[2021-07-20 14:23:08.991] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140445245802_from_3_to_10".
+[2021-07-20 14:23:09.009] [memgraph_log] [info] WAL file contains 146571 deltas.
+[2021-07-20 14:23:09.068] [memgraph_log] [info] Applied 146571 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:23:09.069] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720140505480498_current".
+[2021-07-20 14:23:09.099] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:23:09.171] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:23:09.172] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720141940840414_current".
+[2021-07-20 14:23:09.203] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:23:09.275] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:23:09.276] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720142108006190_current".
+[2021-07-20 14:23:09.316] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:23:09.382] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:23:09.383] [memgraph_log] [info] Trying to load WAL file "/var/lib/memgraph/wal/20210720142125977887_current".
+[2021-07-20 14:23:09.414] [memgraph_log] [info] WAL file contains 170760 deltas.
+[2021-07-20 14:23:09.482] [memgraph_log] [info] Applied 170760 deltas from WAL. Skipped 0 deltas, because they were too old.
+[2021-07-20 14:23:09.483] [memgraph_log] [info] All necessary WAL files are loaded successfully.
+[2021-07-20 14:23:09.483] [memgraph_log] [info] Recreating indices from metadata.
+[2021-07-20 14:23:09.484] [memgraph_log] [info] Recreating 0 label indices from metadata.
+[2021-07-20 14:23:09.484] [memgraph_log] [info] Label indices are recreated.
+[2021-07-20 14:23:09.484] [memgraph_log] [info] Recreating 2 label+property indices from metadata.
+[2021-07-20 14:23:09.485] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:23:09.497] [memgraph_log] [info] A label+property index is recreated from metadata.
+[2021-07-20 14:23:09.497] [memgraph_log] [info] Label+property indices are recreated.
+[2021-07-20 14:23:09.497] [memgraph_log] [info] Indices are recreated.
+[2021-07-20 14:23:09.498] [memgraph_log] [info] Recreating constraints from metadata.
+[2021-07-20 14:23:09.498] [memgraph_log] [info] Recreating 0 existence constraints from metadata.
+[2021-07-20 14:23:09.498] [memgraph_log] [info] Existence constraints are recreated from metadata.
+[2021-07-20 14:23:09.499] [memgraph_log] [info] Recreating 0 unique constraints from metadata.
+[2021-07-20 14:23:09.499] [memgraph_log] [info] Unique constraints are recreated from metadata.
+[2021-07-20 14:23:09.499] [memgraph_log] [info] Constraints are recreated from metadata.
+[2021-07-20 14:23:09.614] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:23:09.822] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:23:09.822] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:23:09.845] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:23:09.845] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:23:09.848] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:23:09.848] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:23:09.850] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:23:09.851] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:23:09.851] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:23:09.851] [memgraph_log] [info] Loading module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:23:09.852] [memgraph_log] [info] Loaded module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:23:09.853] [memgraph_log] [info] Loading triggers...
+[2021-07-20 14:23:09.853] [memgraph_log] [info] Loading streams...
+[2021-07-20 14:23:09.853] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:23:09.939] [memgraph_log] [info] Starting 2 Bolt workers
+[2021-07-20 14:23:09.940] [memgraph_log] [info] Bolt server is fully armed and operational
+[2021-07-20 14:23:09.940] [memgraph_log] [info] Bolt listening on 0.0.0.0:7687
+[2021-07-20 14:23:11.543] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.3:44030
+[2021-07-20 14:23:11.544] [memgraph_log] [info] Using version 4.1 of protocol
+[2021-07-20 14:23:11.544] [memgraph_log] [info] Client connected 'mgclient/1.2.0'
+[2021-07-20 14:23:11.545] [memgraph_log] [debug] [Run] 'MATCH (n) DETACH DELETE n;'
+[2021-07-20 14:23:11.577] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :Book(isbn);'
+[2021-07-20 14:23:11.578] [memgraph_log] [debug] [Run] 'CREATE INDEX ON :User(user_id);'
+[2021-07-20 14:23:11.579] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Books_Summary.csv" WITH HEADER AS row 
+                                CREATE (b: Book { 
+                                isbn: row.isbn , 
+                                title:  row.book_title, 
+                                author: row.book_author, 
+                                publisher: row.publisher, 
+                                year_of_publishing: row.year_of_publication, 
+                                language: row.Language, 
+                                summary:  row.Summary, 
+                                img: row.img_m 
+                            }); '
+[2021-07-20 14:23:11.604] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Users_Rated.csv" WITH HEADER AS row
+                                CREATE (u: User {
+                                    user_id : row.user_id,
+                                    age: row.age,
+                                    city : row.city,
+                                    state : row.state,
+                                    country : row.country
+                                }); '
+[2021-07-20 14:23:11.839] [memgraph_log] [debug] [Run] ' LOAD CSV FROM "/usr/lib/memgraph/import-data/BX_Ratings.csv" WITH HEADER AS row
+                                MATCH (u:User), (b:Book) WHERE u.user_id = row.UserID AND b.isbn = row.ISBN
+                                CREATE (u)-[:RATED { rating: row.BookRating }] -> (b) ;
+                                '
+[2021-07-20 14:23:12.013] [memgraph_log] [info] Bolt client 172.19.0.3:44030 closed the connection.
+[2021-07-20 14:23:14.436] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63950
+[2021-07-20 14:23:14.437] [memgraph_log] [info] Accepted a Bolt connection from 172.19.0.1:63952
+[2021-07-20 14:23:14.438] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:23:14.439] [memgraph_log] [info] Using version 1.0 of protocol
+[2021-07-20 14:23:14.440] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:23:14.441] [memgraph_log] [info] Client connected 'neo4j-javascript/0.0.0-dev'
+[2021-07-20 14:23:14.442] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:14.442] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:19.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:19.434] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:24.433] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:24.433] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:29.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:29.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:34.434] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:34.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:39.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:39.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:44.436] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:44.436] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:49.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:49.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:54.436] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:23:54.436] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:59.433] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:23:59.433] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:04.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:04.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:09.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:09.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:14.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:14.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:19.433] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:19.433] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:24.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:24.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:29.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:29.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:34.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:34.434] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:39.434] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:39.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:44.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:44.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:49.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:49.436] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:54.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:54.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:24:59.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:24:59.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:04.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:04.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:09.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:09.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:14.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:14.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:19.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:19.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:24.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:24.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:29.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:29.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:34.434] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:34.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:39.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:39.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:44.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:44.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:49.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:49.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:54.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:25:54.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:59.432] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:25:59.432] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:04.434] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:04.434] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:09.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:09.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:14.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:14.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:19.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:19.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:24.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:24.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:29.437] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:29.437] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:34.434] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:34.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:39.435] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:39.435] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:44.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:44.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:49.431] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:49.431] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:26:55.011] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:26:55.011] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:00.011] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:00.011] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:05.008] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:05.008] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:10.015] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:10.015] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:15.015] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:15.015] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:20.014] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:20.014] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:25.003] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:25.003] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:30.004] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:30.004] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:35.008] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:35.008] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:40.006] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:40.006] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:45.007] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:45.007] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:50.006] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:27:50.006] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:55.016] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:27:55.017] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:00.003] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:00.003] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:05.015] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:05.015] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:09.500] [memgraph_log] [info] Starting snapshot creation to "/var/lib/memgraph/snapshots/20210720142809500519_timestamp_116"
+[2021-07-20 14:28:09.572] [memgraph_log] [info] Snapshot creation successful!
+[2021-07-20 14:28:09.579] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-20 14:28:10.007] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:10.007] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:15.003] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:15.003] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:20.010] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:20.010] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:25.006] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:25.006] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:30.009] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:30.009] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:35.007] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:35.007] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:40.016] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:40.016] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:44.999] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:44.999] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:50.014] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:28:50.014] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:55.016] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:28:55.016] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:00.012] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:00.012] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:05.018] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:05.019] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:10.012] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:10.012] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:15.008] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:15.008] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:20.010] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:20.011] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:25.003] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:25.003] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:30.001] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:30.001] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:35.008] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:35.008] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:40.003] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:40.003] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:45.016] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:45.016] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:50.009] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:50.009] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:29:55.016] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:29:55.016] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:30:00.009] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:30:00.009] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:30:05.014] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:30:05.015] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:30:10.012] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:30:10.020] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:30:15.009] [memgraph_log] [debug] [Run] 'SHOW STORAGE INFO'
+[2021-07-20 14:30:15.009] [memgraph_log] [debug] [Run] 'MATCH (n) RETURN COUNT(n) AS cnt'
+[2021-07-20 14:30:16.509] [memgraph_log] [info] Bolt shutting down...
+[2021-07-20 14:30:17.041] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/wcc.py"...
+[2021-07-20 14:30:17.043] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/wcc.py"
+[2021-07-20 14:30:17.045] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/py_example.py"...
+[2021-07-20 14:30:17.046] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/py_example.py"
+[2021-07-20 14:30:17.047] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/nxalg.py"...
+[2021-07-20 14:30:17.048] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/nxalg.py"
+[2021-07-20 14:30:17.048] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/mgp_networkx.py"...
+[2021-07-20 14:30:17.049] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/mgp_networkx.py"
+[2021-07-20 14:30:17.049] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/graph_analyzer.py"...
+[2021-07-20 14:30:17.049] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/graph_analyzer.py"
+[2021-07-20 14:30:17.049] [memgraph_log] [info] Closing module "/usr/lib/memgraph/query_modules/example.so"...
+[2021-07-20 14:30:17.050] [memgraph_log] [info] Closed module "/usr/lib/memgraph/query_modules/example.so"
+[2021-07-20 14:30:17.542] [memgraph_log] [info] Starting snapshot creation to "/var/lib/memgraph/snapshots/20210720143017542065_timestamp_143"
+[2021-07-20 14:30:17.607] [memgraph_log] [info] Snapshot creation successful!
+[2021-07-20 14:30:17.612] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-20 14:30:17.653] [memgraph_log] [info] Peak memory usage: 117.89MiB
+[2021-07-20 14:35:25.561] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:35:29.335] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!

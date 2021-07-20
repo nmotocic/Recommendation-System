@@ -5,8 +5,6 @@ services:
     user: root
     volumes:
       - ./memgraph/import-data:/usr/lib/memgraph/import-data
-      - ./memgraph/mg_lib:/var/lib/memgraph
-      - ./memgraph/mg_log:/var/log/memgraph
       - ./memgraph/mg_etc:/etc/memgraph
     ports:
       - "7687:7687"
