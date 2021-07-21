@@ -726,3 +726,6 @@
 [2021-07-20 14:30:17.653] [memgraph_log] [info] Peak memory usage: 117.89MiB
 [2021-07-20 14:35:25.561] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
 [2021-07-20 14:35:29.335] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-20 14:51:45.601] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-20 14:51:49.291] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-20 14:52:04.160] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
