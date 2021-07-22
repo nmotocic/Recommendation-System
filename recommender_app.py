@@ -92,7 +92,7 @@ def load_data():
 
     memgraph.execute_query(f""" LOAD CSV FROM "{users_path}" WITH HEADER AS row
                                 CREATE (u: User {{
-                                    user_id : row.user_id,
+                                    user_id : ToInteger(row.user_id),
                                     age: row.age,
                                     city : row.city,
                                     state : row.state,
@@ -100,7 +100,7 @@ def load_data():
                                 }}); """)
 
     memgraph.execute_query(f""" LOAD CSV FROM "{books_users_rating}" WITH HEADER AS row
-                                MATCH (u:User), (b:Book) WHERE u.user_id = row.UserID AND b.isbn = row.ISBN
+                                MATCH (u:User), (b:Book) WHERE u.user_id = ToInteger(row.UserID) AND b.isbn = row.ISBN
                                 CREATE (u)-[:RATED {{ rating: ToInteger(row.BookRating) }}] -> (b) ;
                                 """)
 
