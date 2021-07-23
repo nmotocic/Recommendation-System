@@ -161,8 +161,14 @@ function simulationUpdate() {
     nodes.forEach(function (d, i) {
         context.beginPath();
         context.arc(d.x, d.y, radius, 0, 2 * Math.PI, true);
-        context.fillStyle = "#FFA500";
-        context.fill();
+        if (d.type == 1) {
+            context.fillStyle = "#dd2222"; //users are red
+            context.fill();
+        } else if (d.type == 2) {
+            context.fillStyle = "#720096"; //books are purple
+            context.fill();
+        }
+        
     });
     
     context.restore();

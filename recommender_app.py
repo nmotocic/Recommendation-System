@@ -209,6 +209,7 @@ def get_properties(*args, **kwargs):
             .execute()
         )
         result = next(results)
+        
 
         book_isbn = result["book"].properties.get("isbn", "")
         book_title = result["book"].properties.get("title", "")
