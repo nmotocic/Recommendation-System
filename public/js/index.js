@@ -83,17 +83,6 @@ function show_properties(event) {
     }
 }
 
-function find_book(event){
-    var pos = get_mouse_pos(event);
-    var result = null
-    nodes.forEach(function (d, i) {
-        if (Math.sqrt(Math.pow((d.new_x - pos.x), 2) + Math.pow((d.new_y - pos.y), 2)) < radius * transform.k){
-            result = d.id
-        }
-    });
-    return result;
-}
-
 function dragsubject(event) {
     var i,
         x = transform.invertX(event.x),
@@ -112,6 +101,18 @@ function dragsubject(event) {
         }
     }
 }
+
+function find_book(event){
+    var pos = get_mouse_pos(event);
+    var result = null
+    nodes.forEach(function (d, i) {
+        if (Math.sqrt(Math.pow((d.new_x - pos.x), 2) + Math.pow((d.new_y - pos.y), 2)) < radius * transform.k){
+            result = d.id
+        }
+    });
+    return result;
+}
+
 
 function dragstarted(event) {
     if (!event.active) simulation.alphaTarget(0.3).restart();

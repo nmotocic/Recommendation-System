@@ -51,3 +51,9 @@
 [2021-07-23 12:01:45.324] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
 [2021-07-23 12:02:45.263] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
 [2021-07-23 12:06:45.010] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 12:39:34.831] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 12:42:17.224] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 12:46:48.620] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 12:51:48.309] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 12:56:48.298] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 13:00:59.836] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
