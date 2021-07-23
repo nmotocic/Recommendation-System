@@ -1,21 +1,24 @@
-const width = window.innerWidth, height = window.innerHeight;
+const width = 1600;
+const height = 800;
 
 var links;
 var nodes;
 
 var simulation;
-var transformation;
+var transform;
 
 var canvas = d3.select("canvas")
 var context = canvas.node().getContext('2d')
 
 var xmlhttp = new XMLHttpRequest();
 
+var radius = 5;
+
 get_graph()
 
 function get_graph(){
     xmlhttp.open("GET", "/load-all", true);
-    xmlhttp.setRequestHeader('Content-type', 'application/json; charset)utf-8');
+    xmlhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == "200"){
@@ -47,7 +50,67 @@ function get_graph(){
 }
 
 function show_properties(event) {
-    //TODO: Properties
+    book_id = find_book(event);
+
+    if(book_id != null){
+        xmlhttp.open("GET", "/book-properties" + "/" + book_id.toString(), true);
+        xmlhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
+
+        xmlhttp.onreadystatechange = function() {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == "200"){
+                data = JSON.parse(xmlhttp.responseText);
+                var properties = data.properties;
+
+                d3.select("#tooltip")
+                  .style("visibility", "visible")
+                  .style("opacity", 0.8)
+                  .style("top", event.y + 'px')
+                  .style("left", event.x + 'px')
+                  .html(
+                      "ISBN: " + properties["ISBN"] + "<br>" +
+                      "Title: " + properties["title"] + "<br>" +
+                      "Author: " + properties["author"] + "<br>" +
+                      "Year of publishing: " + properties["yop"] + "<br>" +
+                      "Language: " + properties["lang"] + "<br>" +
+                      "Summary: " + properties["summary"]
+                  );
+            }
+        }
+        xmlhttp.send();
+    } else {
+        d3.select("#tooltip")
+          .style("visiblity", "hidden");
+    }
+}
+
+function find_book(event){
+    var pos = get_mouse_pos(event);
+    var result = null
+    nodes.forEach(function (d, i) {
+        if (Math.sqrt(Math.pow((d.new_x - pos.x), 2) + Math.pow((d.new_y - pos.y), 2)) < radius * transform.k){
+            result = d.id
+        }
+    });
+    return result;
+}
+
+function dragsubject(event) {
+    var i,
+        x = transform.invertX(event.x),
+        y = transform.invertY(event.y),
+        dx,
+        dy;
+    for (i = nodes.length - 1; i >= 0; --i) {
+        node = nodes[i];
+        dx = x - node.x;
+        dy = y - node.y;
+
+        if (dx * dx + dy * dy < radius * radius) {
+            node.x = transform.applyX(node.x);
+            node.y = transform.applyY(node.y);
+            return node;
+        }
+    }
 }
 
 function dragstarted(event) {
@@ -85,38 +148,15 @@ function simulationUpdate() {
 
     links.forEach(function (d) {
         context.beginPath();
-
-        context.globalAlpha = alpha(d);
-
         context.moveTo(d.source.x, d.source.y);
         context.lineTo(d.target.x, d.target.y);
-
-        context.strokeStyle = "#7ecd8a";
         context.stroke();
-
-        context.globalAlpha = 1;
     });
     nodes.forEach(function (d, i) {
         context.beginPath();
-
-        context.shadowColor = " #7ecd8a";
-        context.shadowBlur = 10 + d.bc * 1000;
-
-        context.fillStyle = "#5abf69";
-        context.arc(d.x, d.y, 50, 0, 2 * Math.PI, true);
+        context.arc(d.x, d.y, radius, 0, 2 * Math.PI, true);
+        context.fillStyle = "#FFA500";
         context.fill();
-
-        context.strokeStyle = "#245c2c";
-
-        context.font = "5px Comic Sans MS";
-        context.fillStyle = "#15371a";
-        context.textAlign = "center";
-        context.fillText(d.symbol, d.x, d.y + 50 + 5);
-
-        context.stroke();
-        
-        d.new_x = (d.x * transform.k + transform.x);
-        d.new_y = (d.y * transform.k + transform.y);
     });
     
     context.restore();

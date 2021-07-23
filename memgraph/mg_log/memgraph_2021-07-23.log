@@ -1,0 +1,53 @@
+[2021-07-23 09:03:30.728] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:03:36.824] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:06:10.445] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:06:47.653] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:11:47.103] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:14:47.301] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:15:28.005] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:17:15.730] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:21:37.001] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:26:36.702] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:27:41.405] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:28:00.540] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:28:32.169] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 09:33:31.861] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:38:31.860] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:43:31.854] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:48:31.859] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:53:31.857] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:58:31.856] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 09:58:36.779] [memgraph_log] [warning] Bolt session associated with 172.18.0.3:44870 timed out
+[2021-07-23 10:03:31.864] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:08:31.865] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:13:31.863] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:18:31.856] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:23:31.858] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:25:57.222] [memgraph_log] [warning] Bolt session associated with 172.18.0.3:44908 timed out
+[2021-07-23 10:26:01.226] [memgraph_log] [warning] Bolt session associated with 172.18.0.3:44926 timed out
+[2021-07-23 10:28:31.860] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:33:31.858] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:38:31.853] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:41:53.017] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 10:46:52.616] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:51:52.606] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:56:52.612] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 10:57:42.968] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 10:59:40.333] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 11:04:39.924] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:09:39.917] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:14:39.918] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:19:39.921] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:24:39.917] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:29:39.913] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:29:44.954] [memgraph_log] [warning] Bolt session associated with 172.18.0.3:45208 timed out
+[2021-07-23 11:29:45.957] [memgraph_log] [warning] Bolt session associated with 172.18.0.3:45210 timed out
+[2021-07-23 11:34:39.917] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:39:39.917] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:44:39.916] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:49:39.919] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:54:39.916] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 11:59:39.925] [memgraph_log] [warning] Found a corrupt snapshot file "/var/lib/memgraph/snapshots/20210720140455153245_timestamp_12" becuase of: Invalid snapshot data!
+[2021-07-23 12:01:45.324] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 12:02:45.263] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)
+[2021-07-23 12:06:45.010] [memgraph_log] [warning] Using non-secure Bolt connection (without SSL)

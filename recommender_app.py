@@ -148,10 +148,16 @@ def index():
     return render_template("index.html")
 
 @log_time
-@app.rounte("/load-all", methods=["GET"])
+@app.route("/load-all", methods=["GET"])
 def load_all():
     """ Load graph from database"""
     try:
+        
+  #      results = memgraph.execute_and_fetch("""
+  #          MATCH (n)-[r]-(m) RETURN n,r,m LIMIT 100
+  #     """)
+        
+        
         results = (
                 Match()
                     .node("User", variable="from")
@@ -159,42 +165,74 @@ def load_all():
                     .node("Book", variable="to")
                     .execute() 
                 )
-
-        #Check if we added the node or edge already
-        nodes_set = set()
-        link_set = set()
-        for result in results:
-            source_id = result["from"].properties["user_id"]
-            source_age = result["from"].properties["age"]
-            source_country = result["from"].properties["country"]
-
-            target_id = result["to"].properties["isbn"]
-            target_title = result["to"].properties["title"]
-            target_author = result["to"].properties["author"]
-            target_year = result["to"].properties["year_of_publishing"]
-            target_language = result["to"].properties["language"]
-            target_summary = result["to"].properties["summary"]
-
-            nodes_set.add((source_id, source_age, source_country))
-            nodes_set.add((target_id, target_title, target_author, target_year, target_language, target_summary))
-
-            if (source_id, target_id) not in link_set and (target_id, source_id) not in link_set:
-                link_set.add((source_id, target_id))
-
-            nodes = [ {"id": user_id, "age": age, "country": country} for (user_id, age, country) in nodes_set]
-            nodes.append( [ { "id": target_id, "title": target_title, "author": target_author, "year": target_year, "language": target_language, "summary" : target_summary }
-                for (target_id, target_title, target_author, target_year, target_language, target_summary) in nodes_set ])
-            links = [ {"source": s_id, "target": t_id} for (s_id, t_id) in link_set]
-
-            response = {"nodes": nodes, "links": links}
-
-            return Response(json.dumps(response), status=200, mimetype="application/json")
-
+        
     except Exception:
         log.info("Fetching the graph was unsuccessfull. Something went wrong.")
         return ("", 500)
 
-#TODO: Properties
+    #Check if we added the node or edge already
+    nodes_set = set()
+    link_set = set()
+    for result in results:
+        source_id = result["from"].properties["user_id"]
+        source_type = 1 #type 1: User
+
+        target_id = result["to"].properties["isbn"]
+        target_type = 2 #type 2: Book
+
+        nodes_set.add((source_id, source_type))
+        nodes_set.add((target_id, target_type))
+
+        if (source_id, target_id) not in link_set and (target_id, source_id) not in link_set:
+            link_set.add((source_id, target_id))
+
+    nodes = [ {"id": node_id, "type": node_type} for (node_id, node_type) in nodes_set ]
+    #nodes.append( [ {"id": target_id, "title": target_title,  "type" : target_type}
+    #    for (target_id, target_title, target_type) in nodes_set ] )
+            
+    links = [ {"source": s_id, "target": t_id} for (s_id, t_id) in link_set ]
+
+    response = {"nodes": nodes, "links": links}
+    return Response(json.dumps(response), status=200, mimetype="application/json")
+
+
+@log_time
+@app.route("/book-properties/<isbn>", methods=["GET"])
+def get_properties(*args, **kwargs):
+    try:
+        isbn = kwargs['isbn']
+
+        results = (
+            Match()
+            .node(variable="book")
+            .where("book.isbn", "=", isbn)
+            .execute()
+        )
+        result = next(results)
+
+        book_isbn = result["book"].properties.get("isbn", "")
+        book_title = result["book"].properties.get("title", "")
+        book_author = result["book"].properties.get("author", "")
+        book_yop = result["book"].properties.get("year_of_publishing", "")
+        book_language = result["book"].properties.get("language", "")
+        book_summary = result["book"].properties.get("summary", "")
+
+        response = {
+            "properties": {
+                "ISBN" : book_isbn,
+                "title" : book_title,
+                "author" : book_author,
+                "yop" : book_yop,
+                "lang" : book_language,
+                "summary" : book_summary
+            }
+        }
+
+        return Response(json.dumps(response), status=200, mimetype="application/json")
+
+    except:
+        log.info("Book properties fetching didn't success. Something went wrong!")
+        return("", 500)
 
 def main():
     memgraph.execute_query("MATCH (n) DETACH DELETE n;")

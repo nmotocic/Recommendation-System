@@ -1,0 +1,32 @@
+#watermark { 
+    position: fixed; 
+    bottom: 0; 
+    right: 0;
+    color:#d1d0d0; 
+}
+
+.hiddenCanvas{
+    display: none;
+}
+
+div#tooltip {
+    position: absolute;
+    padding: 10px;
+    visibility: hidden;
+    font-family: 'Open Sans' sans-serif;
+    color: #000;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #999;
+    border-radius: 2px;
+    opacity: 0.85;
+    z-index: 1;
+    width: 50%;
+}
+
+.node.type1{
+    fill: #ffc500   
+}
+
+.node.type2{
+    fill: #fb6e00
+}
