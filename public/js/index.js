@@ -36,11 +36,11 @@ function get_graph(){
             transform = d3.zoomIdentity;
 
             d3.select(context.canvas)
-            .call(d3.drag().subject(dragsubject).on("start", dragstarted).on("drag", dragged).on("end", dragended))
-            .call(d3.zoom().scaleExtend([1/10, 8]).on("zoom", zoomed));
+                .call(d3.drag().subject(dragsubject).on("start", dragstarted).on("drag", dragged).on("end", dragended))
+                .call(d3.zoom().scaleExtent([1/10, 8]).on("zoom", zoomed));
 
             d3.select(context.canvas)
-            .on("click", function(d) { show_properties(d); });
+                .on("click", function(d) { show_properties(d); });
             
             simulation.nodes(nodes).on("tick", simulationUpdate);
             simulation.force("link").links(links);
@@ -79,7 +79,7 @@ function show_properties(event) {
         xmlhttp.send();
     } else {
         d3.select("#tooltip")
-          .style("visiblity", "hidden");
+          .style("visibility", "hidden");
     }
 }
 
@@ -100,6 +100,11 @@ function dragsubject(event) {
             return node;
         }
     }
+}
+
+function zoomed(event) {
+    transform = event.transform;
+    simulationUpdate();
 }
 
 function find_book(event){
